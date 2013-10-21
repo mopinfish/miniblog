@@ -1,8 +1,12 @@
-<?php $this->setLayoutVar('title', 'アカウント登録'); ?>
+<?php $this->setLayoutVar('title', 'ログイン'); ?>
 
-<h2>アカウント登録</h2>
+<h2>ログイン</h2>
 
-<form action="<?php echo $baseUrl; ?>/account/register" method="post">
+<p>
+    <a href="<?php echo $baseUrl; ?>/account/signup">新規ユーザー登録</a>
+</p>
+
+<form action="<?php echo $baseUrl; ?>/account/authenticate" method="post">
     <input type="hidden" name="_token" value="<?php echo $this->escape($_token); ?>" />
 
     <?php if (isset($errors) && count($errors) > 0): ?>
@@ -10,6 +14,7 @@
     <?php endif; ?>
     <?php echo $this->render('common/inputs', array('userName' => $userName, 'password' => $password)); ?>
     <p>
-        <input type="submit" value="登録" />
+        <input type="submit" value="ログイン" />
     </p>
 </form>
+
