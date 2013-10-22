@@ -1,0 +1,8 @@
+{% set title = status.user_name %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+{% include 'common/status.html.twig' with {'status': status} only %}
+{% endblock %}
+
+

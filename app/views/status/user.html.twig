@@ -1,0 +1,12 @@
+{% set title = user.user_name %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<h2>{{ user.user_name }}</h2>
+
+<div id="statuses">
+    {% for status in statuses %}
+    {% include 'common/status.html.twig' with {'baseUrl': baseUrl, 'status': status} only %}
+    {% endfor %}
+</div>
+{% endblock %}

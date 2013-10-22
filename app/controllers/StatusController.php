@@ -17,7 +17,7 @@ class StatusController extends Controller
     {
         $user = $this->_session->get('user');
         $statuses = $this->_dbManager->get('Status')->fetchAllPersonalArchivesByUserId($user['id']);
-        return $this->pureRender(array(
+        return $this->render(array(
             'errors' => array(),
             'statuses' => $statuses,
             'body' => '',
@@ -63,7 +63,7 @@ class StatusController extends Controller
         $statuses = $this->_dbManager->get('Status')->fetchAllPersonalArchivesByUserId($user['id']);
 
         // 投稿一覧の再表示
-        return $this->pureRender(array(
+        return $this->render(array(
             'errors' => $errors,
             'body' => $body,
             'statuses' => $statuses,
@@ -83,7 +83,7 @@ class StatusController extends Controller
 
         $statuses = $this->_dbManager->get('Status')->fetchAllByUserId($user['id']);
 
-        return $this->pureRender(array(
+        return $this->render(array(
             'user' => $user,
             'statuses' => $statuses
         ));
@@ -100,6 +100,6 @@ class StatusController extends Controller
             $this->forward404();
         }
 
-        return $this->pureRender(array('status' => $status));
+        return $this->render(array('status' => $status));
     }
 }

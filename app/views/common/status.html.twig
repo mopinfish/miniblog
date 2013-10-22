@@ -1,0 +1,10 @@
+<div class="status">
+    <div class="status_content">
+        <a href="{{ baseUrl }}/user/{{ status.user_name }}">{{ status.user_name }}</a>
+        {{ status.body }}
+    </div>
+    <div>
+        <a href="{{ baseUrl }}/user/{{ status.user_name }}/status/{{ status.id }}">{{ status.created_at }}</a>
+    </div>
+</div>
+

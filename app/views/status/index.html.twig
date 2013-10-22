@@ -1,0 +1,20 @@
+{% set title = 'ホーム' %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<form action="{{ baseUrl }}/status/post" method="post">
+    <input type="hidden" name="_token" value="{{ _token }}" />
+    {% if errors and errors|length > 0 %}
+    {% include 'common/errors.html.twig' with {'errors': errors} only %}
+    {% endif %}
+    <textarea name="body" rows="2" cols="60">{{ body }}</textarea>
+    <p>
+        <input type="submit" value="発言" />
+    </p>
+</form>
+<div id="statuses">
+    {% for status in statuses %}
+    {% include 'common/status.html.twig' with {'status': status} %}
+    {% endfor %}
+</div>
+{% endblock %}
