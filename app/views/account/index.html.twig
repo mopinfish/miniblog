@@ -1,0 +1,22 @@
+{% set title = 'アカウント' %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<h2>アカウント</h2>
+
+<p>
+    ユーザーID:
+    <a href="{{ baseUrl }}/user/{{ user.user_name }}">
+        <strong>{{ user.user_name }}</strong>
+    </a>
+</p>
+
+<ul>
+    <li>
+        <a href="{{ baseUrl }}/">ホーム</a>
+    </li>
+    <li>
+        <a href="{{ baseUrl }}/account/signout">ログアウト</a>
+    </li>
+</ul>
+{% endblock %}

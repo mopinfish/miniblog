@@ -1,0 +1,18 @@
+{% set title = 'アカウント登録' %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<h2>アカウント登録</h2>
+
+<form action="{{ baseUrl }}/account/register" method="post">
+    <input type="hidden" name="_token" value="{{ _token }}" />
+
+    {% if errors and errors|length > 0 %}
+    {% include 'common/errors.html.twig' with {'errors': errors} only %}
+    {% endif %}
+    {% include 'common/inputs.html.twig' with {'userName': userName, 'password': password} %}
+    <p>
+        <input type="submit" value="登録" />
+    </p>
+</form>
+{% endblock %}

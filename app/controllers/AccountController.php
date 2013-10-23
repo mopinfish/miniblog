@@ -15,7 +15,7 @@ class AccountController extends Controller
      */
     public function indexAction() {
         $user = $this->_session->get('user');
-        return $this->pureRender(array('user' => $user));
+        return $this->render(array('user' => $user));
     }
 
     /**
@@ -28,7 +28,7 @@ class AccountController extends Controller
             return $this->redirect('/account');
         }
 
-        return $this->pureRender(array(
+        return $this->render(array(
             'userName' => '',
             'password' => '',
             '_token' => $this->generateCsrfToken('account/signin')
@@ -83,7 +83,7 @@ class AccountController extends Controller
             }
         }
 
-        return $this->pureRender(array(
+        return $this->render(array(
             'userName' => $userName,
             'password' => $password,
             'errors' => $errors,
@@ -112,7 +112,7 @@ class AccountController extends Controller
             return $this->redirect('/account');
         }
 
-        return $this->pureRender(array(
+        return $this->render(array(
             'userName' => '',
             'password' => '',
             '_token' => $this->generateCsrfToken('account/signup')
@@ -170,7 +170,7 @@ class AccountController extends Controller
         }
 
         // 入力ページの再表示
-        return $this->pureRender(array(
+        return $this->render(array(
             'userName' => $userName,
             'password' => $password,
             'errors' => $errors,

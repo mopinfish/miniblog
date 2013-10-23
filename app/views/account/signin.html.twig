@@ -1,0 +1,22 @@
+{% set title = 'ログイン' %}
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<h2>ログイン</h2>
+
+<p>
+    <a href="{{ baseUrl }}/account/signup">新規ユーザー登録</a>
+</p>
+
+<form action="{{ baseUrl }}/account/authenticate" method="post">
+    <input type="hidden" name="_token" value="{{ _token }}" />
+
+    {% if errors and errors|length > 0 %}
+    {% include 'common/errors.html.twig' with {'errors': errors} only %}
+    {% endif %}
+    {% include 'common/inputs.html.twig' with {'userName': userName, 'password': password} %}
+    <p>
+        <input type="submit" value="ログイン" />
+    </p>
+</form>
+{% endblock %}
