@@ -8,14 +8,18 @@ class AccountController extends Controller
     /*
      * ログイン必須アクションを定義
      */
-    protected $_authActions = array('index', 'singout');
+    protected $_authActions = array('index', 'singout', 'follow');
 
     /**
      * アカウント トップページアクション
      */
     public function indexAction() {
         $user = $this->_session->get('user');
-        return $this->render(array('user' => $user));
+        $followings = $this->_dbManager->get('User')->fetchAllFollowingsByUserId($user['id']);
+        return $this->render(array(
+            'user' => $user,
+            'followings' => $followings
+        ));
     }
 
     /**
@@ -176,5 +180,42 @@ class AccountController extends Controller
             'errors' => $errors,
             '_token' => $this->generateCsrfToken('account/signup')
         ), 'signup');
+    }
+
+    /**
+     * フォローアクション
+     */
+    public function followAction()
+    {
+        // POST通信でなかったら404ページへ
+        if (!$this->_request->isPost()) {
+            $this->forward404();
+        }
+
+        // フォロー対象ユーザ名の存在チェック
+        $followingName = $this->_request->getPost('following_name');
+        if (!$followingName) {
+            $this->forward404();
+        }
+
+        // CSRFトークンが正しくなかったら入力ページへリダイレクト
+        $token = $this->_request->getPost('_token');
+        if (!$this->checkCsrfToken('account/follow', $token)) {
+            return $this->redirect('/user/' . $followingName);
+        }
+
+        $followUser = $this->_dbManager->get('User')->fetchByUserName($followingName);
+        if (!$followUser) {
+            $this->forward404();
+        }
+
+        $user = $this->_session->get('user');
+        $followingRepository = $this->_dbManager->get('Following');
+        // フォロー対象ユーザが自分以外、かつフォロー済みでない場合のみ、レコードに追加
+        if ($user['id'] !== $followUser['id'] && !$followingRepository->isFollowing($user['id'], $followUser['id'])) {
+            $followingRepository->insert($user['id'], $followUser['id']);
+        }
+
+        return $this->redirect('/account');
     }
 }

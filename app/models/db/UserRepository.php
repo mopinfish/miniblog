@@ -5,36 +5,6 @@
  */
 class UserRepository extends DbRepository
 {
-//    public function test()
-//    {
-//        $name = 'hogehoge';
-//        $password = $this->hashPassword('fugafuga');
-//        $now = new DateTime();
-//        $time = $now->format('Y-m-d H:i:s');
-//
-//        $sql = "
-//            INSERT INTO `user`(user_name, password, created_at)
-//            VALUES(:user_name, :password, :created_at)
-//            ";
-//        $stmt = $this->execute($sql, array(
-//            ':user_name' => $name,
-//            ':password' => $password,
-//            ':created_at' => $time
-//        ));
-//
-//        $sql = "SELECT * FROM `user` WHERE user_name = :user_name";
-//        $ret = $this->fetch($sql, array(
-//            ':user_name' => $name
-//        ));
-//        var_dump($ret);
-//
-//        $sql = "DELETE FROM `user`";
-//        $ret = $this->execute($sql);
-//        var_dump($ret);
-//
-//        return $ret;
-//    }
-
     /**
      * 新規ユーザー登録
      */
@@ -83,6 +53,20 @@ class UserRepository extends DbRepository
             return true;
         }
         return false;
+    }
+
+    /**
+     * ユーザIDからフォローしている全ユーザの情報を取得
+     */
+    public function fetchAllFollowingsByUserId($userId)
+    {
+        $sql = "
+            SELECT u.*
+            FROM user u
+                LEFT JOIN following f on f.following_id = u.id
+            WHERE f.user_id = :user_id
+            ";
+        return $this->fetchAll($sql, array(':user_id' => $userId));
     }
 }
 

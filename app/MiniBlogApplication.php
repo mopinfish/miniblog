@@ -36,6 +36,8 @@ class MiniBlogApplication extends Application
             // AccountControllerの定義
             '/account'
                 => array('controller' => 'account', 'action' => 'index'),
+            '/follow'
+                => array('controller' => 'account', 'action' => 'follow'),
             '/account/:action'
                 => array('controller' => 'account')
         );

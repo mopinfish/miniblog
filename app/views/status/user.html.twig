@@ -4,6 +4,19 @@
 {% block content %}
 <h2>{{ user.user_name }}</h2>
 
+{% if following is defined %}
+{% if following %}
+<p>フォローしています</p>
+{% else %}
+<form action="{{ baseUrl }}/follow" method="post">
+    <input type="hidden" name="_token" value="{{ _token }}" />
+    <input type="hidden" name="following_name" value="{{ user.user_name }}" />
+
+    <input type="submit" value="フォローする" />
+</form>
+{% endif %}
+{% endif %}
+
 <div id="statuses">
     {% for status in statuses %}
     {% include 'common/status.html.twig' with {'baseUrl': baseUrl, 'status': status} only %}
